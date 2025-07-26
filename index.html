@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="CRORx is a free offline app to decode Canadian Rail Operating Rules (CROR) triple-head signal aspects. Ideal for railway staff and enthusiasts.">
+
+    <meta property="og:title" content="CRORx – Decode Canadian Railway Signals" />
+    <meta property="og:description" content="Understand and interpret CROR triple-head signal aspects with the CRORx app. Offline, no permissions, free to use." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://MilanSuvajac.github.io/CRORx" />
+    <meta property="og:image" content="https://MilanSuvajac.github.io/CRORx/CRORx_Screenshot.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CRORx – Decode Canadian Railway Signals" />
+    <meta name="twitter:description" content="Free offline tool to decode CROR triple-head signals. Perfect for railway staff and railfans." />
+    <meta name="twitter:image" content="https://MilanSuvajac.github.io/CRORx/CRORx_Screenshot.png" />
+    <meta name="keywords" content="CROR, Canadian Rail Operating Rules, railway signal decoder, train signals, triple-head signal, CRORx app, railway app, offline signal tool, railfan tool, rail enthusiast app">
+
+    <meta name="author" content="Milan Suvajac">
+    <title>CRORx App – Decode Canadian Triple-Head Signal Aspects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Reset & Body Styles */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top, then let content flow */
+            min-height: 100vh;
+            padding: 0px 10px 0px 10px;
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 0px 20px 0px 20px;
+            max-width: 600px; /* Max width for larger screens */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Header & App Icon */
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-icon {
+            width: 160px;
+            height: 160px;
+            border-radius: 100%; /* Rounded icon */
+            margin: 15px; /* Space below icon */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Screenshot Button Styles */
+        #screenshotButton {
+            display: inline-block;
+            padding: 15px 25px; /* Slightly more padding for a button */
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            width: auto;
+            max-width: 90%;
+            margin-top: 10px; /* Space between icon and button */
+            margin-bottom: 10px; /* Space below button before description */
+            background-color: #ed2b27;
+            color: white;
+        }
+
+        #screenshotButton:hover {
+            background-color: #ed2b27;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Description Section */
+        .description-section p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        /* Buttons Section (Download/Donate) */
+        .buttons-section {
+            margin-top: 25px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .primary-button {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .primary-button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .secondary-button {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .secondary-button:hover {
+            background-color: #219d54;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        /* --- Modal Styles --- */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top, higher than other content */
+            padding-top: 50px; /* Location of the box, pushing content down from the top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+            box-sizing: border-box;
+        }
+
+        .modal-content {
+            margin: auto; /* Centers the image horizontally */
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 90vw; /* Max width of 90% of viewport width */
+            max-height: 90vh; /* Max height of 90% of viewport height */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            border-radius: 8px;
+            object-fit: contain; /* Ensures the entire image is visible within its bounds */
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        #caption {
+            margin: 15px auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 5px 0;
+            font-size: 1.1em;
+        }
+
+        /* Close button styles are now removed as the element itself is removed */
+
+        /* Modal Animation */
+        @-webkit-keyframes zoom {
+            from {-webkit-transform:scale(0)}
+            to {-webkit-transform:scale(1)}
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+
+        /* Small screens (e.g., mobile phones) */
+        @media (max-width: 576px) {
+            body {
+                padding: 5px;
+            }
+            .container {
+                padding: 0px 15px 0px 15px;
+                margin-top: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            html {
+                font-size: 15px;
+            }
+
+            .app-icon {
+                width: 100px;
+                height: 100px;
+                margin: 10px;
+            }
+
+            #screenshotButton {
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+
+            .buttons-section {
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 15px;
+                margin-bottom: 10px;
+            }
+
+            .button {
+                width: 100%;
+                max-width: 300px;
+                padding: 12px 15px;
+                font-size: 1em;
+            }
+
+            .modal-content {
+                /* Removed specific width: 95%; to let max-width/height handle it consistently */
+            }
+            /* Close button styles were here, now removed */
+
+            #caption {
+                font-size: 1em;
+            }
+        }
+
+        /* Medium screens (e.g., tablets) */
+        @media (min-width: 577px) and (max-width: 768px) {
+            .container {
+                padding: 0px 15px 0px 15px;
+                margin-top: 10px;
+            }
+            .app-icon {
+                width: 120px;
+                height: 120px;
+                margin: 10px;
+            }
+            #screenshotButton {
+                font-size: 1.05em;
+                padding: 10px 25px;
+            }
+            .buttons-section {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            .button {
+                flex-basis: auto;
+                max-width: 250px;
+                padding: 15px 20px;
+            }
+        }
+
+        /* Larger screens (desktop) */
+        @media (min-width: 769px) {
+            .container {
+                    margin-top: 5px;
+            }
+            .buttons-section {
+                flex-direction: row;
+                justify-content: center;
+                gap: 30px;
+            }
+            .button {
+                min-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="CRORx_Icon_160px.png" alt="CRORx Icon" class="app-icon">
+            <button id="screenshotButton">View a screenshot of<br>CRORx Signal Decoder<br>for Android</button>
+        </header>
+
+        <section class="description-section">
+            <p>The CRORx application is designed to assist railway professionals and enthusiasts in decoding triple-head signal aspects according to the Canadian Rail Operating Rules (CROR), based on the version effective January 28, 2025.</p>
+
+            <p>To use the app, tap any light to cycle through its available colors and flashing states. You can also tap on plates to toggle them on or off, if they are permitted by the current signal aspect.</p>
+
+            <p>Once the desired signal combination is selected, tap the "Decode" button to interpret the aspect. Use the "Reset" button to clear the current configuration and start a new one.</p>
+
+            <p>This tool operates entirely offline and does not require any device permissions, either at installation or during runtime. It is free to use. If you find it helpful, consider supporting it with a PayPal donation.</p>
+
+            <p>This APK file is hosted on Google Drive. You may see a warning saying it can't be scanned for viruses — this is a standard Google message for all app files. If you trust the source, it's safe to download. Before installing the app, you may also use an online scanner such as<br><a href=https://www.virustotal.com/gui/home/upload>Virus Total</a>.</p>
+
+            <p>Version 1.0.0 - July 28, 2025</p>
+        </section>
+
+        <section class="buttons-section">
+            <a href="https://drive.google.com/file/d/1IevOQIU5quPc-2iJ2AVwmIXqdpTcBa6i/view?usp=drive_link" class="button primary-button" download>Download CRORx</a>
+            <a href="https://www.paypal.com/donate/?business=3Y8H925FFVHEG&no_recurring=0&currency_code=CAD" class="button secondary-button" target="_blank">Donate via PayPal</a>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Milan Suvajac. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <div id="screenshotModal" class="modal">
+        <img class="modal-content" id="screenshotImage" src="CRORx_Screenshot.png" alt="App Screenshot">
+        <div id="caption"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the modal elements
+            const modal = document.getElementById('screenshotModal');
+            const modalImg = document.getElementById('screenshotImage');
+            const captionText = document.getElementById('caption');
+
+            // Get the screenshot button
+            const screenshotButton = document.getElementById('screenshotButton');
+
+            // When the user clicks on the screenshot button, open the modal
+            if (screenshotButton) {
+                screenshotButton.onclick = function() {
+                    modal.style.display = "block";
+                    modalImg.src = "CRORx_Screenshot.png";
+                    captionText.innerHTML = "Tap or click anywhere to go back.";
+                };
+            }
+
+            // Close modal when clicking anywhere on the modal background/content
+            if (modal) {
+                modal.onclick = function() { // No need for event parameter if just setting display
+                    modal.style.display = "none";
+                };
+            }
+        });
+    </script>
+</body>
+</html>
